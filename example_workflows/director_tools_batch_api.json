@@ -1,0 +1,43 @@
+{
+  "prompt": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "test-panorama.png"
+      }
+    },
+    "2": {
+      "class_type": "DirectorToolsBatchPanorama",
+      "inputs": {
+        "image": [
+          "1",
+          0
+        ],
+        "presets_json": "{\n  \"schema_version\": 1,\n  \"shots\": [\n    {\n      \"shot_id\": \"SH010\",\n      \"name\": \"Wide\",\n      \"source_id\": \"panorama_A\",\n      \"yaw\": 0,\n      \"pitch\": 0,\n      \"vertical_fov\": 75,\n      \"width\": 640,\n      \"height\": 360,\n      \"aspect_ratio\": \"16:9\",\n      \"camera_height\": 0\n    },\n    {\n      \"shot_id\": \"SH020\",\n      \"name\": \"Door\",\n      \"source_id\": \"panorama_A\",\n      \"yaw\": 35,\n      \"pitch\": -4,\n      \"vertical_fov\": 58,\n      \"width\": 640,\n      \"height\": 360,\n      \"aspect_ratio\": \"16:9\",\n      \"camera_height\": 0\n    },\n    {\n      \"shot_id\": \"SH030\",\n      \"name\": \"Reverse\",\n      \"source_id\": \"panorama_A\",\n      \"yaw\": -145,\n      \"pitch\": 0,\n      \"vertical_fov\": 42,\n      \"width\": 640,\n      \"height\": 360,\n      \"aspect_ratio\": \"16:9\",\n      \"camera_height\": 0\n    }\n  ]\n}",
+        "columns": 3,
+        "thumb_size": 256,
+        "save_files": false
+      }
+    },
+    "3": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "2",
+          0
+        ],
+        "filename_prefix": "DirectorTools/shot"
+      }
+    },
+    "4": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "2",
+          1
+        ],
+        "filename_prefix": "DirectorTools/contact_sheet"
+      }
+    }
+  }
+}

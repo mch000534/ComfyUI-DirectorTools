@@ -1,0 +1,37 @@
+{
+  "prompt": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "test-panorama.png"
+      }
+    },
+    "2": {
+      "class_type": "DirectorToolsPanoramaViewer",
+      "inputs": {
+        "image": [
+          "1",
+          0
+        ],
+        "aspect_ratio": "16:9",
+        "width": 1920,
+        "height": 1080,
+        "center_x": 0.5,
+        "center_y": 0.5,
+        "zoom": 1.0,
+        "projection": "360 Panorama",
+        "camera_height": 0.0
+      }
+    },
+    "3": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "2",
+          0
+        ],
+        "filename_prefix": "DirectorToolsPanoramaViewer"
+      }
+    }
+  }
+}

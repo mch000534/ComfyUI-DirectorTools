@@ -1,0 +1,41 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "grid.png"
+    }
+  },
+  "2": {
+    "class_type": "DirectorToolsGridSplit",
+    "inputs": {
+      "image": [
+        "1",
+        0
+      ],
+      "rows": 3,
+      "cols": 3,
+      "shot_number": 5,
+      "separator_px": 0
+    }
+  },
+  "3": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "2",
+        0
+      ],
+      "filename_prefix": "DirectorTools/selected_shot"
+    }
+  },
+  "4": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "2",
+        1
+      ],
+      "filename_prefix": "DirectorTools/all_cells"
+    }
+  }
+}

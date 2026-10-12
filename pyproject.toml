@@ -1,0 +1,11 @@
+[project]
+name = "comfyui-director-tools"
+version = "0.10.3"
+description = "Character and panorama asset prompts, 360 camera, shot presets, batch framing and contact sheets for ComfyUI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+# Install as a ComfyUI custom_nodes folder, not as a pip library.
+# No Registry publisher ID or repository URL is claimed before publication.

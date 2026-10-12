@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Director Tools · Panorama viewer host fixture</title>
+<body style="background:#16181c;color:#eee;font:14px sans-serif">
+<h1>Director Tools · Panorama viewer browser acceptance fixture</h1><main style="width:560px"></main>
+<script type="module">
+import { installCamera } from '../web/lib/extension.mjs';
+let callbacks = {};
+class Node {
+    constructor(values = ['16:9',1920,1080,.5,.5,1,'360 Panorama',0]) {
+        this.widgets = ['aspect_ratio','width','height','center_x','center_y','zoom','projection','camera_height'].map((name,i) => ({name,value:values[i]??(name==='camera_height'?0:'360 Panorama'),callback(){}}));
+        this.properties = {}; this.size = [560,600];
+        this.graph = {beforeChange(){}, afterChange(){}, change(){}};
+        this.onNodeCreated?.();
+    }
+    addDOMWidget(name,type,element,options) {
+        document.querySelector('main').append(element);
+        const w = {name,type,element,options}; this.widgets.push(w); return w;
+    }
+    setSize(size) { this.size = size; }
+    setDirtyCanvas() {}
+}
+installCamera(Node, { apiURL: path => window.fixtureSource });
+const art = document.createElement('canvas'); art.width=2000;art.height=1000;
+const ctx=art.getContext('2d');
+for(let x=0;x<2000;x+=100) {ctx.fillStyle=`hsl(${x/2000*360},65%,45%)`;ctx.fillRect(x,0,100,1000);}
+ctx.fillStyle='#ffffff80';for(let y=0;y<1000;y+=100)ctx.fillRect(0,y,2000,20);
+ctx.fillStyle='white';ctx.font='60px sans-serif';ctx.fillText('PANORAMA 2:1',650,500);
+window.node=new Node();
+const meta={filename:'director_tools_panorama_0123456789abcdef0123456789abcdef.png',subfolder:'',type:'temp',source_width:2000,source_height:1000};
+// Same-origin preview API is replaced only in this isolated browser fixture.
+window.fixtureSource = art.toDataURL();
+window.setWidget=(name,value)=> {const w=window.node.widgets.find(w=>w.name===name);w.value=value;w.callback(value);};
+window.setRatio=value=>window.setWidget('aspect_ratio',value);
+window.restore=values=> {
+    const properties=structuredClone(window.node.properties);
+    window.node.onRemoved();document.querySelector('main').replaceChildren();
+    window.node=new Node(values);window.node.properties=properties;window.node.onConfigure({widgets_values:values});
+};
+window.addEventListener('wheel',()=>window.wheelEscaped=(window.wheelEscaped||0)+1);
+window.node.onExecuted({director_tools_panorama:[meta]});
+window.cameraReady=true;
+</script></body></html>

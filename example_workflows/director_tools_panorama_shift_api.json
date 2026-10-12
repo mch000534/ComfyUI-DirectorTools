@@ -1,0 +1,39 @@
+{
+  "prompt": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "test-panorama.png"
+      }
+    },
+    "2": {
+      "class_type": "DirectorToolsPanoramaShift",
+      "inputs": {
+        "image": [
+          "1",
+          0
+        ],
+        "shift_x": 0.5
+      }
+    },
+    "3": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "2",
+          0
+        ],
+        "filename_prefix": "DirectorTools/panorama_shift"
+      }
+    },
+    "4": {
+      "class_type": "PreviewAny",
+      "inputs": {
+        "source": [
+          "2",
+          1
+        ]
+      }
+    }
+  }
+}

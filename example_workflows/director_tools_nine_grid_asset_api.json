@@ -1,0 +1,19 @@
+{
+  "1": {
+    "class_type": "DirectorToolsAssetPrompt",
+    "inputs": {
+      "custom_prompt": "A weathered brass compass with a hinged lid, engraved markings and a dark leather strap.",
+      "asset_type": "Nine-grid asset · 九宮格資產",
+      "language": "English",
+      "character_layout": "Three views",
+      "style": "Photorealistic",
+      "background": "Gray",
+      "expression": "None",
+      "environment": "None",
+      "time_of_day": "None",
+      "lighting": "Soft light",
+      "grid_asset_type": "Prop",
+      "aspect_ratio": "1:1"
+    }
+  }
+}

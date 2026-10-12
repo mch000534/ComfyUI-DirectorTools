@@ -1,0 +1,1 @@
+# No additional dependencies. Uses torch, numpy and Pillow supplied by ComfyUI.

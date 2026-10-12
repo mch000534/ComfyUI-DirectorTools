@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "shots": [
+    {
+      "shot_id": "SH010",
+      "name": "Wide",
+      "source_id": "panorama_A",
+      "yaw": 0,
+      "pitch": 0,
+      "vertical_fov": 75,
+      "width": 640,
+      "height": 360,
+      "aspect_ratio": "16:9",
+      "camera_height": 0
+    },
+    {
+      "shot_id": "SH020",
+      "name": "Door",
+      "source_id": "panorama_A",
+      "yaw": 35,
+      "pitch": -4,
+      "vertical_fov": 58,
+      "width": 640,
+      "height": 360,
+      "aspect_ratio": "16:9",
+      "camera_height": 0
+    },
+    {
+      "shot_id": "SH030",
+      "name": "Reverse",
+      "source_id": "panorama_A",
+      "yaw": -145,
+      "pitch": 0,
+      "vertical_fov": 42,
+      "width": 640,
+      "height": 360,
+      "aspect_ratio": "16:9",
+      "camera_height": 0
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "1": {
+    "class_type": "DirectorToolsAssetPrompt",
+    "inputs": {
+      "custom_prompt": "A forest cabin surrounded by tall trees, mossy rocks and a winding path.",
+      "asset_type": "Panorama",
+      "language": "English",
+      "character_layout": "Three views",
+      "style": "Cinematic",
+      "background": "None",
+      "expression": "None",
+      "environment": "Outdoor",
+      "time_of_day": "Day",
+      "lighting": "Natural light"
+    }
+  }
+}
