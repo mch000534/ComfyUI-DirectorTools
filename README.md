@@ -452,6 +452,12 @@ PLAYWRIGHT_MODULE=/absolute/path/to/playwright COMFY_TEST_URL=http://127.0.0.1:8
 
 Publisher 為 [mch000534](https://registry.comfy.org/zh/publishers/mch000534)，節點 ID 為 `comfyui-director-tools`。發佈版本取自 `pyproject.toml`，同一版本不可重複發佈。
 
+自動發佈工作流程會在 `main` 分支的 `pyproject.toml` 更新後檢查 Registry。將版本改為尚未發佈的版本（例如 `0.10.4`）並推送到 `main`，工作流程就會發佈該版本；一般程式碼或中繼資料更新若未提高版本，會略過發佈。也可在 GitHub Actions 的「Publish to Comfy Registry」工作流程選擇 **Run workflow** 手動執行。工作流程會先查詢 Registry；已存在的相同版本會略過，且不能覆寫。
+
+在 Actions 開啟該次 workflow run，查看版本檢查步驟的記錄：若版本已存在，會顯示略過；若需發佈，請確認 **Publish node** 步驟成功。步驟失敗時，開啟該步驟的記錄查看錯誤。
+
+請在 GitHub 儲存庫 **Settings → Secrets and variables → Actions** 新增名為 `REGISTRY_ACCESS_TOKEN` 的 repository secret，值使用該 Publisher 的 Registry API Key。工作流程只在需要發佈時要求此 secret。
+
 安裝官方 `comfy-cli` 後，在此專案根目錄執行：
 
 ```sh

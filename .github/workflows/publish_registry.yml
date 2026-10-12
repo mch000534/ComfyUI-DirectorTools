@@ -1,0 +1,84 @@
+name: Publish to Comfy Registry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - pyproject.toml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: comfy-registry-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Check whether this version needs publishing
+        id: version
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import tomllib
+          import urllib.error
+          import urllib.request
+
+          with open("pyproject.toml", "rb") as project_file:
+              project = tomllib.load(project_file)["project"]
+          name = project["name"]
+          version = project["version"]
+          url = f"https://api.comfy.org/nodes/{name}/versions"
+          request = urllib.request.Request(
+              url,
+              headers={"User-Agent": "ComfyUI-DirectorTools-registry-publisher/1.0"},
+          )
+
+          try:
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  payload = json.load(response)
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise
+              versions = []
+          else:
+              if not isinstance(payload, list) or any(
+                  not isinstance(item, dict) or not isinstance(item.get("version"), str)
+                  for item in payload
+              ):
+                  raise ValueError("Unexpected Registry versions API response")
+              versions = [item["version"] for item in payload]
+
+          publish = version not in versions
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"publish={str(publish).lower()}\n")
+          print(f"Registry version {version}: {'publish' if publish else 'already present; skipping'}")
+          PY
+
+      - name: Require Registry access token
+        if: steps.version.outputs.publish == 'true'
+        env:
+          REGISTRY_ACCESS_TOKEN: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+        shell: bash
+        run: |
+          if [[ -z "$REGISTRY_ACCESS_TOKEN" ]]; then
+            echo "REGISTRY_ACCESS_TOKEN repository secret is required to publish." >&2
+            exit 1
+          fi
+
+      - name: Publish node
+        if: steps.version.outputs.publish == 'true'
+        uses: Comfy-Org/publish-node-action@d2366e7abb6ab16f3bb03e3520ae25c8cf749bc9
+        with:
+          personal_access_token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+          skip_checkout: 'true'
