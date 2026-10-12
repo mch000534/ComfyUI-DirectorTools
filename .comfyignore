@@ -1,0 +1,11 @@
+# Keep runtime files, README images and example workflows in the Registry archive.
+# Exclude development-only files tracked by Git.
+/tests/
+/docs/superpowers/
+/docs/*design.md
+/.github/
+/CLAUDE.md
+/AGENTS.md
+/package.json
+/.gitignore
+/.comfyignore

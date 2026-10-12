@@ -58,7 +58,8 @@ def parse_presets(text):
                 raise ValueError(f'{key} must be 1–80 characters.')
         if not re.fullmatch(r'[A-Za-z0-9_-]+',shot['shot_id']) or shot['shot_id'].lower() in ids:
             raise ValueError('Shot IDs must be unique letters, numbers, underscores or hyphens.')
-        ids.add(shot['shot_id'].lower()); sources.add(shot['source_id'])
+        ids.add(shot['shot_id'].lower())
+        sources.add(shot['source_id'])
         cx,cy,zoom=degree_framing(shot['yaw'],shot['pitch'],shot['vertical_fov'])
         if not isinstance(shot['aspect_ratio'],str):
             raise ValueError('Unknown aspect ratio.')

@@ -448,6 +448,22 @@ PLAYWRIGHT_MODULE=/absolute/path/to/playwright COMFY_TEST_URL=http://127.0.0.1:8
 
 參考：[官方 Python 節點 API](https://docs.comfy.org/custom-nodes/backend/server_overview)、[IMAGE 格式](https://docs.comfy.org/custom-nodes/backend/images_and_masks)、[JavaScript hooks](https://docs.comfy.org/custom-nodes/js/javascript_hooks)。全景行為參考 [ComfyUI_preview360panorama](https://github.com/ProGamerGov/ComfyUI_preview360panorama)；投影由原生 WebGL2／PyTorch 實作，沒有 Three.js 依賴。
 
+## Registry 發佈（維護者）
+
+Publisher 為 [mch000534](https://registry.comfy.org/zh/publishers/mch000534)，節點 ID 為 `comfyui-director-tools`。發佈版本取自 `pyproject.toml`，同一版本不可重複發佈。
+
+安裝官方 `comfy-cli` 後，在此專案根目錄執行：
+
+```sh
+comfy node validate
+comfy node pack
+comfy node publish
+```
+
+最後一個指令會以隱藏輸入要求該 Publisher 的 Registry API Key。金鑰不可放入專案或提交到 Git。發佈前請提交版本與設定變更；CLI 只打包 Git 已追蹤的檔案，並依 `.comfyignore` 排除測試及開發設計文件，保留節點、前端、說明圖片與範例工作流程。後續發佈需先更新 `pyproject.toml` 和本文件的版本，再執行測試與打包檢查。
+
+流程參考：[官方 Registry 發佈指南](https://docs.comfy.org/registry/publishing)。
+
 ## 授權
 
 [MIT License](LICENSE)。

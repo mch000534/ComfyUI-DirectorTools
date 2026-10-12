@@ -8,4 +8,12 @@ license = {text = "MIT"}
 dependencies = []
 
 # Install as a ComfyUI custom_nodes folder, not as a pip library.
-# No Registry publisher ID or repository URL is claimed before publication.
+
+[project.urls]
+Repository = "https://github.com/mch000534/ComfyUI-DirectorTools"
+Documentation = "https://github.com/mch000534/ComfyUI-DirectorTools#readme"
+Issues = "https://github.com/mch000534/ComfyUI-DirectorTools/issues"
+
+[tool.comfy]
+PublisherId = "mch000534"
+DisplayName = "ComfyUI Director Tools"

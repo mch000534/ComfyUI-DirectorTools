@@ -59,5 +59,6 @@ PLAYWRIGHT_MODULE=/absolute/path/to/playwright node tests/browser-smoke.mjs
 
 ## 不需要的東西
 
-- 不需要 `pip install`、不需要 Node.js 建置步驟、不需要 Registry 發布
+- 不需要 `pip install .`、不需要 Node.js 建置步驟
+- Registry 發布使用 `pyproject.toml` 中的 `mch000534` Publisher 與 `comfy node publish`；`.comfyignore` 排除開發檔案。API Key 不可提交到 Git。
 - 測試中的 ComfyUI smoke tests（`tests/comfy-*.py`）需要實際跑起來的 ComfyUI 實例
