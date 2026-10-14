@@ -13,6 +13,13 @@ DirectorToolsPanoramaShift / Director Tools · Panorama Shift:
   it is a vertical boundary at column offset % width. Odd widths round to a pixel.
 - Prompt requests local join repair (geometry/texture/lighting) while preserving
   equirectangular projection, pole stretching, scene content and periodic outer edges.
+  Lock both outer edge regions and copy all pixels outside the minimum interior repair
+  strip unchanged from the shifted input. At the default half-roll, edit only the middle
+  seam strip; use its untouched neighbors as reference. Do not regenerate the full image.
+  If the join remains on the outside edges, request unchanged output instead of edge
+  repair and recommend a separate half-roll pass for panoramas wider than one pixel.
+  Prompt-only guidance is not pixel enforcement; strict preservation requires downstream
+  masked inpainting and compositing the original shifted pixels outside the mask.
   Never apply the perspective-view refinement prompt to the full panorama.
 
 Tests: default half-roll pixel order, negative shift/inverse, fractional rounding,

@@ -110,7 +110,7 @@ class DirectorToolsAssetPrompt:
     RETURN_TYPES = ('STRING',)
     RETURN_NAMES = ('prompt',)
     FUNCTION = 'build_prompt'
-    CATEGORY = 'image/Director Tools'
+    CATEGORY = 'image/Super Director Tools'
     DESCRIPTION = ('Assemble a character reference, seamless 2:1 panorama or 3x3 asset reference prompt. '
                    'No model calls or translation. Inactive mode options are ignored. '
                    'Set actual panorama width/height to 2:1 in your generation workflow.')

@@ -8,10 +8,10 @@ NODE_CLASS_MAPPINGS = {'DirectorToolsPanoramaViewer': DirectorToolsPanoramaViewe
                        'DirectorToolsBatchPanorama': DirectorToolsBatchPanorama, 'DirectorToolsContactSheet': DirectorToolsContactSheet,
                        'DirectorToolsPanoramaShift': DirectorToolsPanoramaShift,
                        'DirectorToolsAssetPrompt': DirectorToolsAssetPrompt}
-NODE_DISPLAY_NAME_MAPPINGS = {'DirectorToolsPanoramaViewer': 'Director Tools · Panorama viewer', 'DirectorToolsGridSplit': 'Director Tools · Grid Split',
-                              'DirectorToolsBatchPanorama': 'Director Tools · Batch Panorama', 'DirectorToolsContactSheet': 'Director Tools · Contact Sheet',
-                              'DirectorToolsPanoramaShift': 'Director Tools · Panorama Shift',
-                              'DirectorToolsAssetPrompt': 'Director Tools · Asset Prompt'}
+NODE_DISPLAY_NAME_MAPPINGS = {'DirectorToolsPanoramaViewer': 'Super Director Tools · Panorama viewer', 'DirectorToolsGridSplit': 'Super Director Tools · Grid Split',
+                              'DirectorToolsBatchPanorama': 'Super Director Tools · Batch Panorama', 'DirectorToolsContactSheet': 'Super Director Tools · Contact Sheet',
+                              'DirectorToolsPanoramaShift': 'Super Director Tools · Panorama Shift',
+                              'DirectorToolsAssetPrompt': 'Super Director Tools · Asset Prompt'}
 WEB_DIRECTORY = './web'
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS', 'WEB_DIRECTORY']

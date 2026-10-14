@@ -74,7 +74,7 @@ class DirectorToolsBatchPanorama:
     OUTPUT_IS_LIST=(False,False,False)
     OUTPUT_NODE=True
     FUNCTION='render'
-    CATEGORY='image/Director Tools'
+    CATEGORY='image/Super Director Tools'
     DESCRIPTION='Render all named camera presets from one panorama. Shot images are one IMAGE batch; all presets must share width and height. Labels appear only on the contact sheet.'
 
     @classmethod
@@ -138,7 +138,7 @@ class DirectorToolsContactSheet:
     RETURN_TYPES=('IMAGE',)
     RETURN_NAMES=('contact_sheet',)
     FUNCTION='assemble'
-    CATEGORY='image/Director Tools'
+    CATEGORY='image/Super Director Tools'
     DESCRIPTION='Create a contact sheet from an IMAGE batch with automatically numbered labels. Prefix SH and start_number 10 generate SH010, SH011… Originals are unchanged.'
 
     def assemble(self,images,columns,thumb_size,prefix='SH',start_number=1):

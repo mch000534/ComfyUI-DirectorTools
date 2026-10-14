@@ -15,10 +15,10 @@ class DirectorToolsPanoramaShift:
     RETURN_TYPES=('IMAGE','STRING')
     RETURN_NAMES=('image','prompt')
     FUNCTION='shift'
-    CATEGORY='image/Director Tools'
+    CATEGORY='image/Super Director Tools'
     DESCRIPTION=('Circularly shift a panorama horizontally without changing pixels or size. '
                  'Inspect the original left/right join at the center with shift_x=0.5. '
-                 'The prompt guides local image-to-image seam repair while preserving equirectangular projection.')
+                 'The prompt guides interior seam repair while locking both outer edges and preserving equirectangular projection.')
 
     def shift(self,image,shift_x=0.5):
         if isinstance(shift_x,bool) or not isinstance(shift_x,(int,float)) or not math.isfinite(shift_x) or not -1<=shift_x<=1:
@@ -36,12 +36,25 @@ class DirectorToolsPanoramaShift:
                       f'between columns {seam_x-1} and {seam_x} using zero-based pixel coordinates. '
                       'Repair only a narrow vertical neighborhood around this boundary. ')
         else:
-            location=('The original join remains across the outer left and right edges of the image. '
-                      'Repair these two edge neighborhoods together as one continuous wraparound join. ')
+            prompt=('The original join remains across the outer left and right edges of the image; '
+                    'there is no interior seam to repair. Both edge regions are protected. '
+                    'Do not regenerate, redraw, retouch or blend either edge or any other part of this image. '
+                    'Return the supplied panorama unchanged. For a separate central seam-repair pass, '
+                    'first use Panorama Shift with shift_x=0.5 on a panorama wider than one pixel '
+                    'to move the original join into the middle of the image.')
+            return shifted,prompt
         prompt=(
-            'Repair the seam in the supplied horizontally shifted equirectangular 360-degree panorama. ' +
+            'Perform a localized inpainting edit on the supplied horizontally shifted equirectangular '
+            '360-degree panorama. Treat the supplied image as the fixed source canvas. '
+            'HIGHEST PRIORITY: Lock the left and right regions, including both outer edge columns, '
+            'exactly as supplied. Do not regenerate, redraw, retouch, relight, recolor, sharpen, denoise '
+            'or blend these protected regions. Their existing wraparound connection must remain unchanged. ' +
             location +
-            'Inspect both sides and locally redraw only mismatched regions to align architectural lines, '
+            'Only regenerate the minimum interior strip needed to repair this seam; at the default '
+            'half-width shift this is the middle of the image. Treat everything outside that strip as '
+            'unmasked, read-only reference and copy it unchanged from the supplied image. '
+            'Use the adjacent unchanged content as reference and locally redraw only mismatched regions '
+            'inside the strip to align architectural lines, '
             'object contours, material textures and repeated patterns. Remove visible discontinuities, '
             'double edges, ghosting, stitching artifacts and abrupt changes in color, exposure or lighting. '
             'Make the transition spatially coherent and improve local clarity and detail without smearing '
@@ -51,7 +64,9 @@ class DirectorToolsPanoramaShift:
             'equirectangular projection, including its intentional stretching near the poles. '
             'Do not convert the panorama to a perspective or fisheye view, straighten the entire panorama, '
             'crop, resize, rotate, shift the image again, add or remove objects, or introduce text or watermarks. '
-            'Keep the outer left and right edges mutually consistent for seamless horizontal wraparound. '
-            'Output one repaired full panorama in the same shifted orientation.'
+            'Match the repaired strip to the untouched content along both boundaries of the strip. '
+            'Output the supplied full panorama with only the interior seam strip replaced, in the same '
+            'shifted orientation. All pixels outside the repair strip, especially the left and right '
+            'edge regions, must remain identical to the supplied image. Do not regenerate the full panorama.'
         )
         return shifted,prompt

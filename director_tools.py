@@ -1,4 +1,4 @@
-"""Director Tools: pixel-exact grid splitting for ComfyUI BHWC images."""
+"""Super Director Tools: pixel-exact grid splitting for ComfyUI BHWC images."""
 
 from numbers import Integral
 
@@ -32,7 +32,7 @@ class DirectorToolsGridSplit:
     RETURN_TYPES = ('IMAGE', 'IMAGE', 'INT')
     RETURN_NAMES = ('selected_image', 'all_cells', 'selected_index')
     FUNCTION = 'split_grid'
-    CATEGORY = 'image/Director Tools'
+    CATEGORY = 'image/Super Director Tools'
     DESCRIPTION = (
         'Split a grid into row-major shots, starting at 1. Internal separator bands are excluded. '
         'selected_image is an exact crop. '

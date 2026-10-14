@@ -1,17 +1,17 @@
-# ComfyUI-DirectorTools
+# Super Director Tools
 
 **目前版本：v0.10.3。** 在 ComfyUI 中準備角色、全景與九宮格資產生成提示詞、從 360° 全景取景、保存鏡頭預設、輸出圖片批次與聯絡表，並提供全景接縫檢查和分格選圖工具。
 
-所有節點位於 `image/Director Tools` 分類，不需要下載模型或額外安裝依賴。畫質增強和接縫重繪由接在下游的圖生圖模型執行。
+所有節點位於 `image/Super Director Tools` 分類，不需要下載模型或額外安裝依賴。畫質增強和接縫重繪由接在下游的圖生圖模型執行。
 
 | 節點 | 用途 | 輸出 |
 | --- | --- | --- |
-| **Director Tools · Asset Prompt** | 組合角色、無縫全景或九宮格資產生成提示詞 | `prompt`（STRING） |
-| **Director Tools · Panorama viewer** | 互動全景取景、角度控制、鏡頭預設 | `image`、`prompt`、`presets_json` |
-| **Director Tools · Batch Panorama** | 按預設清單一次輸出多個鏡頭 | `shot_images`（真正 IMAGE batch）、`contact_sheet`、`metadata_json` |
-| **Director Tools · Contact Sheet** | 把 IMAGE batch 排成帶編號的聯絡表 | `contact_sheet` |
-| **Director Tools · Panorama Shift** | 水平循環平移，把左右接縫移到中間檢查 | `image`、`prompt` |
-| **Director Tools · Grid Split** | 將分鏡格圖拆成單格或整批圖片 | `selected_image`、`all_cells`、`selected_index` |
+| **Super Director Tools · Asset Prompt** | 組合角色、無縫全景或九宮格資產生成提示詞 | `prompt`（STRING） |
+| **Super Director Tools · Panorama viewer** | 互動全景取景、角度控制、鏡頭預設 | `image`、`prompt`、`presets_json` |
+| **Super Director Tools · Batch Panorama** | 按預設清單一次輸出多個鏡頭 | `shot_images`（真正 IMAGE batch）、`contact_sheet`、`metadata_json` |
+| **Super Director Tools · Contact Sheet** | 把 IMAGE batch 排成帶編號的聯絡表 | `contact_sheet` |
+| **Super Director Tools · Panorama Shift** | 水平循環平移，把左右接縫移到中間檢查 | `image`、`prompt` |
+| **Super Director Tools · Grid Split** | 將分鏡格圖拆成單格或整批圖片 | `selected_image`、`all_cells`、`selected_index` |
 
 ![Panorama viewer 預設控制示意（使用測試圖片）](docs/shot-controls.png)
 
@@ -32,7 +32,7 @@
    ```
 
 3. 重新啟動 ComfyUI，並重新整理頁面。
-4. 搜尋 `Director Tools` 新增節點，或拖入下方的範例工作流程。
+4. 搜尋 `Super Director Tools` 新增節點，或拖入下方的範例工作流程。
 
 Python 版本需為 3.10 或以上。使用 ComfyUI 已提供的 PyTorch、NumPy、Pillow，不需要額外 pip 安裝或 Node.js／npm 建置；本專案是 custom node 資料夾，不是用 `pip install .` 安裝的函式庫。球面預覽需要支援 WebGL2 的瀏覽器。
 
@@ -41,6 +41,8 @@ ComfyUI Desktop 請使用該安裝實例的實際 custom nodes 路徑；Windows 
 **更新時先儲存工作流程。** 用完整新版資料夾覆蓋舊版。後端修改需要重新啟動 ComfyUI；前端按鈕或選單修改需要重新整理頁面。重新載入後再執行工作流程，才會更新已生成的圖片和聯絡表。
 
 ### 舊版本相容性
+
+- **名稱更新：** 套件顯示名稱改為 Super Director Tools；節點 ID、Registry 套件 ID `comfyui-director-tools` 與安裝資料夾名稱維持不變，既有工作流程可繼續使用。
 
 - **v0.8.0：** Batch Panorama 的 `shot_images` 由 IMAGE list 改為單一 IMAGE batch。所有 preset 的 `width`／`height` 必須相同；下游節點改為一次收到整批圖片。混合尺寸請統一尺寸或分開使用 Batch Panorama 節點。
 - **v0.7.1：** Contact Sheet 的 `labels` 已改為 `prefix`／`start_number`。舊節點建議重新新增；舊 API 請改用這兩個欄位。
@@ -70,7 +72,7 @@ Load Image ─ image → Panorama viewer ─ presets_json → Batch Panorama
 
 ## Asset Prompt：資產生成預備
 
-搜尋 **Director Tools · Asset Prompt**，填入人物、場景或道具描述，選擇 `Character`、`Panorama` 或 `Nine-grid asset · 九宮格資產`。節點將自訂描述、模式預設文字和選項組合成一個 `STRING`，直接接生成流程的文字提示詞輸入，例如 CLIP Text Encode 的 `text`。若下游顯示文字框，先轉成可連線輸入。
+搜尋 **Super Director Tools · Asset Prompt**，填入人物、場景或道具描述，選擇 `Character`、`Panorama` 或 `Nine-grid asset · 九宮格資產`。節點將自訂描述、模式預設文字和選項組合成一個 `STRING`，直接接生成流程的文字提示詞輸入，例如 CLIP Text Encode 的 `text`。若下游顯示文字框，先轉成可連線輸入。
 
 ```text
 Asset Prompt ─ prompt → 生成流程的文字輸入 → 角色設定圖／全景圖
@@ -262,7 +264,7 @@ PNG 為 8-bit；JSON 保留對應鏡頭設定。每次明確存檔執行使用�
 
 ## Contact Sheet：按圖片比例排列的聯絡表
 
-Batch Panorama 已提供按 Shot ID 標示的聯絡表；獨立的 **Director Tools · Contact Sheet** 可把任意同尺寸 RGB IMAGE batch 排成聯絡表，例如 `Batch Panorama.shot_images` 或 `Grid Split.all_cells`。
+Batch Panorama 已提供按 Shot ID 標示的聯絡表；獨立的 **Super Director Tools · Contact Sheet** 可把任意同尺寸 RGB IMAGE batch 排成聯絡表，例如 `Batch Panorama.shot_images` 或 `Grid Split.all_cells`。
 
 ```text
 IMAGE batch → Contact Sheet → Preview Image / Save Image
@@ -295,7 +297,9 @@ Load Image → Panorama Shift ─ image → Preview Image / 圖生圖模型
 
 移出一側的像素從另一側接回，不裁切、補邊、縮放或插值，保留原尺寸、像素、dtype／device。支援多張 IMAGE batch 和 1／3／4 通道。平移量四捨五入至整數像素，半像素向遠離零的方向取整；奇數寬度的接縫落在中央附近。0、1、-1 不改變像素排列。
 
-`prompt` 是英文局部重繪指令，會標明原接縫平移後的實際像素位置，要求修正斷線、重影、材質錯接、色差與曝光差，保留其他內容。指令要求保留等距柱狀全景投影、極區的正常拉伸和左右循環連續性。建議用於 2:1 全景；普通圖片仍可平移。
+`prompt` 是英文局部重繪指令，會標明原接縫平移後的實際像素位置，只允許重新生成接縫附近最小範圍的內部窄帶；預設 `shift_x=0.5` 時即為中央區域。左右區域（包含最外側邊緣）明確鎖定，不得重畫、調色、改光或混合，窄帶以外的像素要求原樣保留，避免破壞平移後已有的左右循環連接。窄帶內修正斷線、重影、材質錯接、色差與曝光差，並銜接兩側未修改的內容，保留等距柱狀全景投影與極區的正常拉伸。接縫仍在外側時（例如 `shift_x=0`、`1`、`-1` 或平移量取整為零），prompt 要求原圖不變，提示先用 `0.5` 將接縫移入中央；單像素寬的圖片沒有可修補的內部接縫。建議用於 2:1 全景；普通圖片仍可平移。
+
+文字提示無法保證生成模型逐像素保留左右區域。若需嚴格保留，請在下游使用僅覆蓋中央接縫窄帶的 inpainting 遮罩，並將重繪結果的遮罩外區域合成回原始 shift 圖片。
 
 節點本身不自動檢測或修補接縫。完成下游重繪後，若需回到原朝向，再接一個 Shift 並使用相反值，例如 `0.5 → -0.5`；模型需保留尺寸。還原時只使用第二個節點的 image 輸出即可。
 

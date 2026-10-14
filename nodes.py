@@ -104,7 +104,7 @@ class DirectorToolsPanoramaViewer:
     RETURN_TYPES = ('IMAGE','STRING','STRING')
     RETURN_NAMES = ('image','prompt','presets_json')
     FUNCTION = 'frame'
-    CATEGORY = 'image/Director Tools'
+    CATEGORY = 'image/Super Director Tools'
     OUTPUT_NODE = True
     DESCRIPTION = 'Drag the image in a fixed viewport and scroll to zoom. Run once to load preview; run again to render changes. The prompt output guides image-to-image detail enhancement and distortion correction while preserving the scene.'
 
@@ -121,9 +121,9 @@ class DirectorToolsPanoramaViewer:
         if projection not in ('Flat', '360 Panorama'):
             raise ValueError('Unknown projection. Select 360 Panorama or Flat.')
         if not isinstance(image, torch.Tensor) or image.ndim != 4 or image.shape[0] != 1:
-            raise ValueError('Director Tools · Panorama viewer requires a single IMAGE with shape [1,H,W,3].')
+            raise ValueError('Super Director Tools · Panorama viewer requires a single IMAGE with shape [1,H,W,3].')
         if image.shape[-1] != 3 or min(image.shape[1:3]) < 1 or not image.is_floating_point():
-            raise ValueError('Director Tools · Panorama viewer requires a non-empty floating point RGB IMAGE.')
+            raise ValueError('Super Director Tools · Panorama viewer requires a non-empty floating point RGB IMAGE.')
         presets_json=workflow_presets(extra_pnginfo,unique_id)
         rect = crop_rect(image.shape[2], image.shape[1], aspect, center_x, center_y, zoom)
         with torch.inference_mode():
